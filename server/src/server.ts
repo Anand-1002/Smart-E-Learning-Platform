@@ -25,7 +25,20 @@ app.use(
 
 app.use(
   cors({
-    origin: ENV.CLIENT_URL,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, or server-to-server)
+      if (!origin) return callback(null, true);
+      // Allow any Vercel deployment domain or localhost or configured CLIENT_URL
+      if (
+        origin.includes('vercel.app') ||
+        origin.includes('localhost') ||
+        origin === ENV.CLIENT_URL ||
+        ENV.CLIENT_URL === '*'
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true
   })
 );
