@@ -1,4 +1,4 @@
-import express, { Express } from 'express';
+import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -38,7 +38,7 @@ if (ENV.NODE_ENV !== 'test') {
 }
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (req: Request, res: Response) => {
   res.json({
     success: true,
     status: 'healthy',
@@ -55,7 +55,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/search', searchRoutes);
 
 // Fallback 404 for undefined api routes
-app.use('/api/*', (req, res) => {
+app.use('/api/*', (req: Request, res: Response) => {
   res.status(404).json({
     success: false,
     message: `API endpoint '${req.originalUrl}' not found`
