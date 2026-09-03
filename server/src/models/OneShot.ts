@@ -42,11 +42,14 @@ const OneShotSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-OneShotSchema.index({
-  title: 'text',
-  description: 'text',
-  instructor: 'text',
-  tags: 'text'
-});
+OneShotSchema.index(
+  {
+    title: 'text',
+    description: 'text',
+    instructor: 'text',
+    tags: 'text'
+  },
+  { language_override: 'none' }
+);
 
 export const OneShot = mongoose.model<IOneShot>('OneShot', OneShotSchema);

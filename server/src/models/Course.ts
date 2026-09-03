@@ -85,11 +85,14 @@ const CourseSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-CourseSchema.index({
-  title: 'text',
-  description: 'text',
-  instructor: 'text',
-  tags: 'text'
-});
+CourseSchema.index(
+  {
+    title: 'text',
+    description: 'text',
+    instructor: 'text',
+    tags: 'text'
+  },
+  { language_override: 'none' }
+);
 
 export const Course = mongoose.model<ICourse>('Course', CourseSchema);
