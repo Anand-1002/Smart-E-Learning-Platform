@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { apiService } from '../services/api';
 import { ISubject, ICourse, IOneShot, ICategory } from '../types';
 import { CourseCard } from '../components/cards/CourseCard';
@@ -11,8 +11,8 @@ import { SkeletonCard } from '../components/ui/Skeleton';
 import { useProgress } from '../hooks/useProgress';
 import {
   Sparkles,
-  BookOpen,
   ArrowRight,
+  Search,
   ShieldCheck,
   Tv,
   ListTree,
@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
+  const navigate = useNavigate();
   const [featuredSubjects, setFeaturedSubjects] = useState<ISubject[]>([]);
   const [popularCourses, setPopularCourses] = useState<ICourse[]>([]);
   const [oneShots, setOneShots] = useState<IOneShot[]>([]);
@@ -58,50 +59,17 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="space-y-16">
-      {/* Hero Section with Full Tactile Neumorphic Relief Sculptures */}
-      <section className="relative pt-12 pb-16 sm:pt-16 sm:pb-24 text-center max-w-7xl mx-auto overflow-visible rounded-3xl">
-        {/* Left Large Tactile Relief Sculpture */}
-        <div className="hidden xl:block absolute -left-28 2xl:-left-36 top-1/2 -translate-y-1/2 pointer-events-none select-none z-10">
-          <div className="relative w-[380px] h-[380px] flex items-center justify-center overflow-visible">
-            {/* Outer Sunken Semicircle Crescent Well */}
-            <div className="absolute left-0 w-[380px] h-[380px] rounded-full neu-relief-crescent [clip-path:polygon(0_0,50%_0,50%_100%,0_100%)]" />
-            
-            {/* Violet Glowing Edge Backlight */}
-            <div className="absolute right-6 w-60 h-60 rounded-full neu-accent-glow opacity-75 blur-2xl" />
-            
-            {/* Center Raised Floating Neumorphic Disc */}
-            <div className="relative w-56 h-56 rounded-full neu-relief-circle z-10 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-full neu-inset opacity-50" />
-            </div>
+      {/* Hero Section with 3D Ambient Waves & Neumorphic Search Bar */}
+      <section className="relative pt-8 pb-14 sm:pt-14 sm:pb-20 text-center max-w-5xl mx-auto overflow-visible rounded-3xl">
+        {/* Left Organic Fluid Ambient Gradient Wave */}
+        <div className="absolute -left-28 sm:-left-36 top-1/2 -translate-y-1/2 w-[340px] sm:w-[460px] h-[340px] sm:h-[460px] rounded-full neu-wave-left pointer-events-none select-none -z-10" />
 
-            {/* Orbiting Clock Hand / Bead Armature */}
-            <div className="absolute inset-0 z-20 animate-neu-orbit-left flex items-center justify-center pointer-events-none">
-              {/* Clean raised clay bead without accent dot */}
-              <div className="absolute -top-3 w-8 h-8 rounded-full neu-btn shadow-md" />
-            </div>
-          </div>
-        </div>
+        {/* Right Organic Fluid Ambient Gradient Wave */}
+        <div className="absolute -right-28 sm:-right-36 top-1/2 -translate-y-1/2 w-[380px] sm:w-[500px] h-[380px] sm:h-[500px] rounded-full neu-wave-right pointer-events-none select-none -z-10" />
 
-        {/* Right Large Tactile Relief Sculpture (Mirrored) */}
-        <div className="hidden xl:block absolute -right-28 2xl:-right-36 top-1/2 -translate-y-1/2 pointer-events-none select-none z-10">
-          <div className="relative w-[380px] h-[380px] flex items-center justify-center overflow-visible">
-            {/* Outer Sunken Semicircle Crescent Well */}
-            <div className="absolute right-0 w-[380px] h-[380px] rounded-full neu-relief-crescent [clip-path:polygon(50%_0,100%_0,100%_100%,50%_100%)]" />
-            
-            {/* Violet Glowing Edge Backlight */}
-            <div className="absolute left-6 w-60 h-60 rounded-full neu-accent-glow opacity-75 blur-2xl" />
-            
-            {/* Center Raised Floating Neumorphic Disc */}
-            <div className="relative w-56 h-56 rounded-full neu-relief-circle z-10 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-full neu-inset opacity-50" />
-            </div>
-
-            {/* Orbiting Clock Hand / Bead Armature (Mirrored) */}
-            <div className="absolute inset-0 z-20 animate-neu-orbit-right flex items-center justify-center pointer-events-none">
-              {/* Clean raised clay bead without accent dot */}
-              <div className="absolute -bottom-3 w-8 h-8 rounded-full neu-btn shadow-md" />
-            </div>
-          </div>
+        {/* Bottom Right Floating Glossy 3D Clay Sphere */}
+        <div className="hidden lg:block absolute -right-6 2xl:-right-12 bottom-6 pointer-events-none select-none z-20">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full neu-floating-sphere animate-bounce-subtle" />
         </div>
 
         {/* Center Hero Content */}
@@ -122,20 +90,54 @@ export const HomePage: React.FC = () => {
             Structured curricula, organized modules, and high-yield one-shot revision videos directly from world-class educators.
           </p>
 
-          {/* Action CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <Link to="/courses">
-              <Button variant="accent" size="lg">
-                <BookOpen className="h-4 w-4" />
-                Explore Courses
-              </Button>
-            </Link>
-            <Link to="/one-shots">
-              <Button variant="outline" size="lg">
-                <Sparkles className="h-4 w-4 text-accent" />
-                Browse One-Shots
-              </Button>
-            </Link>
+          {/* Large Neumorphic Search Bar */}
+          <div className="pt-2 max-w-2xl mx-auto">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const input = (e.currentTarget.elements.namedItem('search') as HTMLInputElement)?.value;
+                if (input?.trim()) {
+                  navigate(`/search?q=${encodeURIComponent(input.trim())}`);
+                }
+              }}
+              className="relative flex items-center p-2 rounded-full neu-card transition-all duration-300 hover:shadow-lg"
+            >
+              <div className="pl-4 pr-3 text-muted-foreground pointer-events-none">
+                <Search className="h-5 w-5 text-muted-foreground/70" />
+              </div>
+              <input
+                type="text"
+                name="search"
+                placeholder="Search for courses, subjects or topics..."
+                className="w-full bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm sm:text-base focus:outline-none pr-4 font-body"
+              />
+              <button
+                type="submit"
+                className="flex-shrink-0 w-11 h-11 rounded-full neu-accent-glow flex items-center justify-center text-white shadow-md hover:scale-105 active:scale-95 transition-all duration-200"
+                aria-label="Search"
+              >
+                <ArrowRight className="h-5 w-5 stroke-[2.5]" />
+              </button>
+            </form>
+
+            {/* Popular Topics Quick Tags */}
+            <div className="flex flex-wrap items-center justify-center gap-2.5 pt-5 text-xs text-muted-foreground">
+              <span className="font-semibold text-foreground/80">Popular right now:</span>
+              {[
+                { label: 'DSA', query: 'dsa' },
+                { label: 'Web Development', query: 'web' },
+                { label: 'Machine Learning', query: 'machine learning' },
+                { label: 'System Design', query: 'system design' }
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  to={`/search?q=${encodeURIComponent(item.query)}`}
+                  className="px-3.5 py-1 rounded-full neu-btn text-[11px] font-medium text-muted-foreground hover:text-foreground transition-all"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
